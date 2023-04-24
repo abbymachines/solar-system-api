@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, abort, make_response
 
 class Planet:
     def __init__(self, id, name, description):
@@ -21,13 +21,13 @@ def validate_planet(planet_id):
     try:
         planet_id = int(planet_id)
     except:
-        return {"message": f"planet {planet_id} not valid"}, 400
+        abort(make_response({"message": f"planet {planet_id} not valid"}, 400))
     
     for planet in planets:
         if planet.id == planet_id:
             return planet
         
-    return {"message": f"planet {planet_id} not found"}, 404
+    abort(make_response({"message": f"planet {planet_id} not found"}, 404))
 
 def make_dict(planet):
     return dict(
@@ -35,7 +35,6 @@ def make_dict(planet):
                 name= planet.name,
                 description= planet.description
             )
-    
 
 def handle_planet(planet_id):
     planet = validate_planet(planet_id)   
