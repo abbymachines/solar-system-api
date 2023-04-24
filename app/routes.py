@@ -18,7 +18,11 @@ bp = Blueprint("planets", __name__, url_prefix="/planets")
 @bp.route("/<planet_id>", methods = ["GET"])
 
 def handle_planet(planet_id):
-    planet_id = int(planet_id)
+    try:
+        planet_id = int(planet_id)
+    except:
+        return {"message": f"planet {planet_id} not valid"}, 400
+    
     for planet in planets:
         if planet.id == planet_id:
             return (dict(
