@@ -28,12 +28,15 @@ def validate_planet(planet_id):
             return planet
         
     return {"message": f"planet {planet_id} not found"}, 404
-    
 
-def handle_planet(planet_id):
-    planet = validate_planet(planet_id)   
+def make_dict(planet):
     return dict(
                 id = planet.id,
                 name= planet.name,
                 description= planet.description
             )
+    
+
+def handle_planet(planet_id):
+    planet = validate_planet(planet_id)   
+    return make_dict(planet)
