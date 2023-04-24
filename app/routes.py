@@ -30,3 +30,5 @@ def handle_planet(planet_id):
                 name= planet.name,
                 description= planet.description
             ))
+
+    return {"message": f"planet {planet_id} not found"}, 404
