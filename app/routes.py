@@ -34,6 +34,19 @@ def get_one_planet(id):
     
     return planet.to_dict(), 200
 
+@bp.route("/<id>", methods =["PUT"])
+def update_one_planet(id):
+    planet = validate_planet(id)
+    request_body = request.get_json()
+
+    planet.name = request_body["name"]
+    planet.description = request_body["description"]
+    planet.composition = request_body["composition"]
+
+    db.session.commit()
+
+    return make_response(f"Planet {planet.name} successfully updated", 200)
+
 @bp.route("", methods=["POST"])
 def create_planet():
     request_body=request.get_json()
