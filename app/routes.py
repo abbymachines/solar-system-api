@@ -13,6 +13,27 @@ from app import db
 bp = Blueprint("planets", __name__, url_prefix="/planets")
 # @bp.route("",methods=["GET"])
 
+# helper function
+def validate_planet(planet_id):
+    try:
+        planet_id = int(planet_id)
+    except:
+        abort(make_response({"message": f"planet {planet_id} not valid"}, 400))
+    
+    planet = Planet.query.get(planet_id)
+
+    if not planet:
+        abort(make_response({"message": f"planet {planet_id} not found"}, 404))
+    
+    return planet
+
+# routes
+@bp.route("/<id>", methods=["GET"])
+def get_one_planet(id):
+    planet = validate_planet(id)
+    
+    return planet.to_dict(), 200
+
 @bp.route("", methods=["POST"])
 def create_planet():
     request_body=request.get_json()
@@ -48,18 +69,6 @@ def get_all_planets():
 #             "chemical composition": planet.composition
 #         })
 #     return jsonify(planets_response)
-
-# def validate_planet(planet_id):
-#     try:
-#         planet_id = int(planet_id)
-#     except:
-#         abort(make_response({"message": f"planet {planet_id} not valid"}, 400))
-    
-#     for planet in planets:
-#         if planet.id == planet_id:
-#             return planet
-        
-#     abort(make_response({"message": f"planet {planet_id} not found"}, 404))
 
 # def make_dict(planet):
 #     return dict(
