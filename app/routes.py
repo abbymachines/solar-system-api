@@ -47,6 +47,15 @@ def update_one_planet(id):
 
     return make_response(f"Planet {planet.name} successfully updated", 200)
 
+@bp.route("/<id>", methods = ["DELETE"])
+def delete_one_planet(id):
+    planet = validate_planet(id)
+
+    db.session.delete(planet)
+    db.session.commit()
+
+    return make_response(f"Planet {planet.name} successfully deleted", 200)
+
 @bp.route("", methods=["POST"])
 def create_planet():
     request_body=request.get_json()
