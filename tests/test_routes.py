@@ -1,4 +1,4 @@
-from werkzeug.exceptions import HTTPException
+#from werkzeug.exceptions import HTTPException
 # from app.routes import validate_book
 import pytest
 
@@ -50,3 +50,16 @@ def test_get_all_planets(client, two_saved_planets):
         "description": "the second one",
         "composition": "second"}
     ]
+
+def test_post_one_planet_returns_201(client):
+    # Act
+    response = client.post("/planets", json={
+        "name": "new planet",
+        "description": "the new one",
+        "composition": "new"
+    })
+    # response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 201
+    # assert response_body == "Book New Book successfully created"
