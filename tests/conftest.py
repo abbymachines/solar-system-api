@@ -28,11 +28,11 @@ def client(app):
 @pytest.fixture
 def two_saved_planets(app):
     first_planet = Planet(name="first planet",
-                      description="the first one",
-                      composition="first")
+                    description="the first one",
+                    composition="first")
     second_planet = Planet(name="second planet",
-                         description="the second one",
-                         composition="second")
+                    description="the second one",
+                    composition="second")
 
     db.session.add_all([first_planet, second_planet])
     db.session.commit()

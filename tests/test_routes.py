@@ -32,7 +32,7 @@ def test_get_first_planet_from_empty_database(client):
 
     # Assert
     assert response.status_code == 404
-    assert response_body == {"message": f"planet 1 not found"}
+    assert response_body == {'message': 'Planet with id 1 was not found'}
 
 def test_get_all_planets(client, two_saved_planets):
     response = client.get("/planets")
@@ -58,8 +58,8 @@ def test_post_one_planet_returns_201(client):
         "description": "the new one",
         "composition": "new"
     })
-    # response_body = response.get_json()
+    response_body = response.get_data(as_text=True)
 
     # Assert
     assert response.status_code == 201
-    # assert response_body == "Book New Book successfully created"
+    assert response_body == "Planet new planet successfully created"
